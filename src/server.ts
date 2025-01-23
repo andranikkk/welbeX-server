@@ -1,7 +1,7 @@
 import app from './index'
 import http from 'http'
 
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 3010
 
 const server = http.createServer(app)
 

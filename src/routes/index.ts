@@ -1,26 +1,20 @@
 import { Router } from 'express'
 const router = Router()
-import multer, { diskStorage } from 'multer'
 import UserController from '../controllers/user-controller'
 import authenticateToken from '../middleware/auth'
-
-const uploadDestination = 'uploads'
-
-const storage = diskStorage({
-	destination: uploadDestination,
-	filename: (req, file, cb) => {
-		cb(null, file.originalname)
-	},
-})
-
-const uploads = multer({
-	storage: storage,
-})
+import PostController from '../controllers/post-controller'
 
 // user routes
-router.post('/register', UserController.register)
 router.post('/login', UserController.login)
+router.post('/register', UserController.register)
 router.get('/current', authenticateToken, UserController.current)
 router.get('/users/:id', authenticateToken, UserController.getUserById)
+
+// posts routes
+router.get('/posts', PostController.getAllPosts)
+router.get('/posts/:id', PostController.getPostById)
+router.post('/posts', authenticateToken, PostController.createPost)
+router.put('/posts/:id', authenticateToken, PostController.updatePost)
+router.delete('/posts/:id', authenticateToken, PostController.deletePost)
 
 export default router
