@@ -1,5 +1,7 @@
 import createError from 'http-errors'
 import express, { Request, Response, NextFunction } from 'express'
+import swaggerUi from 'swagger-ui-express'
+import swaggerOutput from './swagger_output.json'
 import cors from 'cors'
 import dotenv from 'dotenv'
 import cookieParser from 'cookie-parser'
@@ -23,6 +25,8 @@ app.set('view engine', 'jade')
 app.use('/uploads', express.static('uploads'))
 
 app.use('/api', routes)
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerOutput))
 
 if (!fs.existsSync('uploads')) {
 	fs.mkdirSync('uploads')
