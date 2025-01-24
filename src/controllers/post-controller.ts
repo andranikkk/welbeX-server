@@ -17,7 +17,6 @@ const PostController = {
 
 			if (req.file) {
 				const mediaPath = path.join(process.cwd(), 'uploads', req.file.filename)
-				fs.writeFileSync(mediaPath, req.file.buffer)
 				mediaUrl = `/uploads/${req.file.filename}`
 			}
 
