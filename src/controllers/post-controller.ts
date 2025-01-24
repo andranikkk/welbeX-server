@@ -1,7 +1,6 @@
 import { prisma } from '../prisma-client'
 import { Request, Response } from 'express'
 import path from 'path'
-import fs from 'fs'
 
 const PostController = {
 	createPost: async (req: any, res: any) => {
@@ -53,9 +52,16 @@ const PostController = {
 					.json({ error: 'You can only edit your own posts' })
 			}
 
+			let mediaUrl = post.mediaUrl
+
+			if (req.file) {
+				const mediaPath = path.join(process.cwd(), 'uploads', req.file.filename)
+				mediaUrl = `/uploads/${req.file.filename}`
+			}
+
 			const updatedPost = await prisma.post.update({
 				where: { id },
-				data: { content },
+				data: { content, mediaUrl },
 			})
 
 			res.json(updatedPost)

@@ -23,13 +23,18 @@ router.get('/users/:id', authenticateToken, UserController.getUserById)
 // posts routes
 router.get('/posts', PostController.getAllPosts)
 router.get('/posts/:id', PostController.getPostById)
+router.delete('/posts/:id', authenticateToken, PostController.deletePost)
 router.post(
 	'/posts',
 	authenticateToken,
 	uploads.single('mediaUrl'),
 	PostController.createPost
 )
-router.put('/posts/:id', authenticateToken, PostController.updatePost)
-router.delete('/posts/:id', authenticateToken, PostController.deletePost)
+router.put(
+	'/posts/:id',
+	authenticateToken,
+	uploads.single('mediaUrl'),
+	PostController.updatePost
+)
 
 export default router
